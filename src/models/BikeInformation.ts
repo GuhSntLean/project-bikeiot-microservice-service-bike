@@ -2,7 +2,7 @@ import { Column, Entity, PrimaryColumn } from "typeorm";
 
 @Entity("bike_information")
 class BikeInformation {
-  @PrimaryColumn
+  @PrimaryColumn()
   id: string;
 
   @Column({ name: "create_by" })

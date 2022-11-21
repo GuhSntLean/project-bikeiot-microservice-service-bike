@@ -6,13 +6,13 @@ class Bike {
   @PrimaryColumn()
   id: number;
 
-  @Column({ name: "mac", type: "string" })
+  @Column({ name: "mac", type: "varchar" })
   mac: string;
 
   @Column({ name: "status", type: "boolean" })
   status: boolean;
 
-  @Column({ name: "secret_bike", type: "string" })
+  @Column({ name: "secret_bike", type: "varchar" })
   secretBike: string;
 
   informationBike: BikeInformation;
