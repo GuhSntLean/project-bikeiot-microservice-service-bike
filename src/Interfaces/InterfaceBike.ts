@@ -1,0 +1,3 @@
+interface InterfaceBike {}
+
+export { InterfaceBike };
