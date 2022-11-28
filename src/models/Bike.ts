@@ -19,7 +19,7 @@ class Bike {
   @Column({ name: "status", enum: StatuBike, default: StatuBike.ACTIVE })
   status: StatuBike;
 
-  @Column({ name: "serial_Number"})
+  @Column({ name: "serial_Number", unique: true})
   serialNumber: string;
 
   @OneToOne(() => ModelBike, (modelBike) => modelBike.id)

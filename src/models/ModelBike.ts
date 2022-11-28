@@ -6,7 +6,7 @@ class ModelBike {
   @PrimaryColumn()
   id: string;
 
-  @Column({ name: "name_model" })
+  @Column({ name: "name_model", unique: true })
   nameModel: string;
 
   constructor() {
