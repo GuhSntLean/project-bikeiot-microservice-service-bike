@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "ts-node-dev src/server/server.ts",
-    "typeorm": "ts-node-dev ./node_modules/typeorm/cli.js -d ./src/config/AppDataBase.ts"
+    "typeorm": "ts-node-dev ./node_modules/typeorm/cli.js -d ./src/config/AppDataSource.ts"
  },
  "devDependencies": {
     "@types/bcrypt": "^5.0.0",

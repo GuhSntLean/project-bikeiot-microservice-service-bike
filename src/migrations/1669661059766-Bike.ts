@@ -31,7 +31,7 @@ export class Bike1669661059766 implements MigrationInterface {
         ],
         foreignKeys: [
           {
-            name: "ModelBike",
+            name: "ModelsBike",
             referencedTableName: "model_bike",
             referencedColumnNames: ["id"],
             columnNames: ["model_id"],

@@ -1,4 +1,4 @@
-import { Column, Entity, OneToOne, PrimaryColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryColumn } from "typeorm";
 import { v4 as uuid } from "uuid";
 import { ModelBike } from "./ModelBike";
 
@@ -22,8 +22,8 @@ class Bike {
   @Column({ name: "serial_Number", unique: true})
   serialNumber: string;
 
-  @OneToOne(() => ModelBike, (modelBike) => modelBike.id)
-  @Column({ name: "model_id" })
+  @ManyToOne(() => ModelBike, (model) => model.id)
+  @JoinColumn({ name: "model_id" })
   modelBike: ModelBike;
 
   constructor() {
