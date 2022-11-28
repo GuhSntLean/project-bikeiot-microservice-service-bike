@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 
-class BikeInformationController {
+class ModelBikeController {
   async store(request: Request, response: Response) {}
 
   async update(request: Request, response: Response) {}
@@ -10,4 +10,4 @@ class BikeInformationController {
   async list(request: Request, response: Response) {}
 }
 
-export { BikeInformationController };
+export { ModelBikeController };

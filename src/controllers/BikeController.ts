@@ -9,8 +9,6 @@ class BikeController {
 
   async list(request: Request, response: Response) {}
 
-  // Não deletar a bike mas sim desativar de leitura de estado
-  async delete(request: Request, response: Response) {}
 }
 
 export { BikeController };
