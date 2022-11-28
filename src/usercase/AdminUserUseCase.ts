@@ -1,0 +1,3 @@
+class AdminUserUseCase {}
+
+export { AdminUserUseCase };

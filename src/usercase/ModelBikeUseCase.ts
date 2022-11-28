@@ -1,0 +1,3 @@
+class ModelBikeUseCase {}
+
+export { ModelBikeUseCase };

@@ -3,4 +3,4 @@ import { Bike } from "../models/Bike";
 
 const getRepositoryUserAdmin = AppDataSource.getRepository(Bike);
 
-export { getRepositoryBike };
+export { getRepositoryUserAdmin };
