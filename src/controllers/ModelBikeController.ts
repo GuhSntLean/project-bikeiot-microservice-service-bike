@@ -5,8 +5,6 @@ class ModelBikeController {
 
   async update(request: Request, response: Response) {}
 
-  async setStatus(request: Request, response: Response) {}
-
   async show(request: Request, response: Response) {}
 
   async list(request: Request, response: Response) {}

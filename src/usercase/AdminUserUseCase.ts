@@ -1,3 +1,5 @@
-class AdminUserUseCase {}
+class AdminUserUseCase {
+  async execute() {}
+}
 
 export { AdminUserUseCase };

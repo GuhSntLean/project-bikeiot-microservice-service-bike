@@ -36,4 +36,4 @@ class Bike {
   }
 }
 
-export { Bike };
+export { Bike, StatuBike };
