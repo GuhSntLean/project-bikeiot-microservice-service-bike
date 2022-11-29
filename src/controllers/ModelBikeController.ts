@@ -20,14 +20,14 @@ class ModelBikeController {
   }
 
   async update(request: Request, response: Response) {
-    const { nameModel } = request.body;
+    const { id, nameModel } = request.body;
 
-    if (!nameModel) {
+    if (!id || !nameModel) {
       return response.status(500).json({ error: "Field is missing" });
     }
 
     const modelBike = new ModelBikeUseCase();
-    const result = modelBike.update();
+    const result = modelBike.update(id, nameModel);
 
     if (result instanceof Error) {
       return response.status(500).json({ error: result.message });
@@ -44,7 +44,7 @@ class ModelBikeController {
     }
 
     const modelBike = new ModelBikeUseCase();
-    const result = modelBike.show();
+    const result = modelBike.show(id);
 
     if (result instanceof Error) {
       return response.status(500).json({ error: result.message });
