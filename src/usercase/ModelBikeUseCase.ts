@@ -2,7 +2,22 @@ import { ModelBike } from "../models/ModelBike";
 import { getRepositoryModelBike } from "../repository/ModelBikeRepository";
 
 class ModelBikeUseCase {
-  async save() {}
+  async save(namemodel: string) {
+    try {
+      const result = await getRepositoryModelBike.create({
+        nameModel: namemodel
+      });
+
+      const modelBike = await getRepositoryModelBike.findOneBy({
+        id: result.id,
+      });
+
+      return modelBike;
+    }catch (error) {
+      console.log(error);
+      return new Error("Error when save");
+    }
+  }
 
   async update(id: string, nameModelBike: string) {
     const modelbike = await getRepositoryModelBike.findOneBy({

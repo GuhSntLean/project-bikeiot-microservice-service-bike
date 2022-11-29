@@ -3,14 +3,14 @@ import { ModelBikeUseCase } from "../usercase/ModelBikeUseCase";
 
 class ModelBikeController {
   async store(request: Request, response: Response) {
-    const { nameModel } = request.body;
+    const { namemodel } = request.body;
 
-    if (!nameModel) {
+    if (!namemodel) {
       return response.status(500).json({ error: "Field is missing" });
     }
 
     const modelBike = new ModelBikeUseCase();
-    const result = modelBike.save();
+    const result = modelBike.save(namemodel);
 
     if (result instanceof Error) {
       return response.status(500).json({ error: result.message });
