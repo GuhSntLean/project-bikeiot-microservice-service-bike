@@ -10,11 +10,13 @@ class ModelBikeController {
     }
 
     const modelBike = new ModelBikeUseCase();
-    const result = modelBike.save(namemodel);
+    const result = await modelBike.save(namemodel);
 
     if (result instanceof Error) {
       return response.status(500).json({ error: result.message });
     }
+
+    console.log(result);
 
     return response.status(201).json(result);
   }
@@ -27,7 +29,7 @@ class ModelBikeController {
     }
 
     const modelBike = new ModelBikeUseCase();
-    const result = modelBike.update(id, nameModel);
+    const result = await modelBike.update(id, nameModel);
 
     if (result instanceof Error) {
       return response.status(500).json({ error: result.message });
@@ -44,7 +46,7 @@ class ModelBikeController {
     }
 
     const modelBike = new ModelBikeUseCase();
-    const result = modelBike.show(id);
+    const result = await modelBike.show(id);
 
     if (result instanceof Error) {
       return response.status(500).json({ error: result.message });
@@ -55,7 +57,7 @@ class ModelBikeController {
 
   async list(request: Request, response: Response) {
     const modelBike = new ModelBikeUseCase();
-    const result = modelBike.list();
+    const result = await modelBike.list();
 
     if (result instanceof Error) {
       return response.status(500).json({ error: result.message });

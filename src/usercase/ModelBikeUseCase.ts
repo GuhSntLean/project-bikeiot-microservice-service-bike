@@ -4,9 +4,11 @@ import { getRepositoryModelBike } from "../repository/ModelBikeRepository";
 class ModelBikeUseCase {
   async save(namemodel: string) {
     try {
-      const result = await getRepositoryModelBike.create({
+      const modelBikeCreate = getRepositoryModelBike.create({
         nameModel: namemodel
       });
+      
+      const result = await getRepositoryModelBike.save(modelBikeCreate)
 
       const modelBike = await getRepositoryModelBike.findOneBy({
         id: result.id,
