@@ -1,10 +1,14 @@
+import { InterfaceResponseBike } from "../Interfaces/InterfaceBike";
 import { Bike } from "../models/Bike";
 import { BikeProvider } from "../provider/BikeProvider";
 import { getRepositoryBike } from "../repository/BikeRepository";
 import { getRepositoryModelBike } from "../repository/ModelBikeRepository";
+import { RabbitMQServer } from "../server/RabbitMQServer";
 
 class BikeUseCase {
   async save(mac: string, modelbike: string, status: string) {
+    const serverAmqp = new RabbitMQServer();
+
     const bikeProvider = new BikeProvider();
 
     const modelBike = await getRepositoryModelBike.findOneBy({ id: modelbike });
@@ -25,15 +29,30 @@ class BikeUseCase {
         status: statusBike,
       });
 
-      await getRepositoryBike.save(newBike);
+      const resultCreate = await getRepositoryBike.save(newBike);
 
-      return newBike;
+      const resultReturn: InterfaceResponseBike = {
+        id: resultCreate.id,
+        serialnumber: resultCreate.serialNumber,
+        mac: resultCreate.mac,
+        status: resultCreate.status,
+        modelbike: resultCreate.modelBike.id,
+      };
+
+      await serverAmqp.start();
+      await serverAmqp.publishExchange(
+        "data.bike",
+        JSON.stringify(resultCreate)
+      );
+
+      return resultReturn;
     } catch (error) {
       return new Error("Erro save user");
     }
   }
 
   async update(id: string, mac: string, status: string, modelbike: string) {
+    const serverAmqp = new RabbitMQServer();
     const bikeProvider = new BikeProvider();
 
     const bikeExist = await getRepositoryBike.findOneBy({
@@ -54,7 +73,6 @@ class BikeUseCase {
     if (!statusBike) {
       return Error("Status incorrect or not exist");
     }
-
     try {
       const result = await getRepositoryBike
         .createQueryBuilder()
@@ -64,18 +82,37 @@ class BikeUseCase {
           modelBike: modelBike,
           status: statusBike,
         })
-        .where("id :id", { id: id })
+        .where("id = :id", { id: id })
         .execute();
 
       if (result.affected != 1) {
         return new Error("Error when updating");
       }
 
-      const bike = await getRepositoryBike.findOneBy({
-        id: id,
+      const resultUpdate = await getRepositoryBike.findOne({
+        where: {
+          id: id,
+        },
+        relations: {
+          modelBike: true,
+        },
       });
 
-      return bike;
+      const resultReturn: InterfaceResponseBike = {
+        id: resultUpdate.id,
+        serialnumber: resultUpdate.serialNumber,
+        mac: resultUpdate.mac,
+        status: resultUpdate.status,
+        modelbike: resultUpdate.modelBike.id,
+      };
+
+      await serverAmqp.start();
+      await serverAmqp.publishExchange(
+        "data.bike",
+        JSON.stringify(resultUpdate)
+      );
+
+      return resultReturn;
     } catch (error) {
       return new Error("Error when updating");
     }
@@ -103,7 +140,7 @@ class BikeUseCase {
         .set({
           status: statusBike,
         })
-        .where("id :id", { id: id })
+        .where("id = :id", { id: id })
         .execute();
 
       if (result.affected != 1) {

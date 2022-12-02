@@ -20,14 +20,14 @@ class BikeController {
   }
 
   async update(request: Request, response: Response) {
-    const { id, mac, status, modelbikeid } = request.body;
+    const { id, mac, status, modelbike } = request.body;
 
-    if (!id || !mac || !status || !modelbikeid) {
+    if (!id || !mac || !status || !modelbike) {
       return response.status(500).json({ error: "Field is missing" });
     }
 
     const bikeUserCase = new BikeUseCase();
-    const result = await bikeUserCase.update(id, mac, modelbikeid, status);
+    const result = await bikeUserCase.update(id, mac, status, modelbike);
 
     if (result instanceof Error) {
       return response.status(500).json({ error: result.message });
