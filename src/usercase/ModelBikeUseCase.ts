@@ -42,7 +42,7 @@ class ModelBikeUseCase {
         .set({
           nameModel: nameModelBike,
         })
-        .where("id :id", { id: id })
+        .where("id = :id", { id: id })
         .execute();
 
       if (result.affected != 1) {

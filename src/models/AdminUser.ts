@@ -6,15 +6,18 @@ enum UserRole {
 }
 
 @Entity("bike_information")
-class BikeInformation {
+class AdminUser {
   @PrimaryColumn()
   id: string;
 
   @Column({ name: "user_name" })
   userName: string;
 
+  @Column({ name: "email" })
+  email: string;
+
   @Column({ name: "role", enum: UserRole, default: UserRole.ADMIN })
-  updateBy: UserRole;
+  role: UserRole;
 }
 
-export { BikeInformation, UserRole };
+export { AdminUser, UserRole };

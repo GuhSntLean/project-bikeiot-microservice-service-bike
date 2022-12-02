@@ -1,6 +1,6 @@
 import { AppDataSource } from "../config/AppDataSource";
-import { Bike } from "../models/Bike";
+import { AdminUser } from "../models/AdminUser";
 
-const getRepositoryUserAdmin = AppDataSource.getRepository(Bike);
+const getRepositoryUserAdmin = AppDataSource.getRepository(AdminUser);
 
 export { getRepositoryUserAdmin };

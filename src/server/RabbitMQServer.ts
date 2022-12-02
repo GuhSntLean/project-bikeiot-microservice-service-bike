@@ -1,4 +1,4 @@
-import { Channel, connect, Connection } from "amqplib";
+import { Channel, connect, Connection, Message } from "amqplib";
 
 class RabbitMQServer {
   private conn: Connection;
@@ -7,6 +7,13 @@ class RabbitMQServer {
   async start() {
     this.conn = await connect('amqp://guest:guest@localhost:5672');
     this.channel = await this.conn.createChannel();
+  }
+
+  async consume(queue: string, callback: (message: Message) => void) {
+    return this.channel.consume(queue, (message) => {
+      callback(message);
+      this.channel.ack(message);
+    });
   }
 
   async publishExchange(exchange: string, message: string) {
