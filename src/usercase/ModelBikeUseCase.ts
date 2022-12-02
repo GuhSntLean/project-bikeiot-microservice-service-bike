@@ -1,27 +1,32 @@
 import { ModelBike } from "../models/ModelBike";
 import { getRepositoryModelBike } from "../repository/ModelBikeRepository";
+import { validate as uuid } from "uuid";
 
 class ModelBikeUseCase {
   async save(namemodel: string) {
     try {
       const modelBikeCreate = getRepositoryModelBike.create({
-        nameModel: namemodel
+        nameModel: namemodel,
       });
-      
-      const result = await getRepositoryModelBike.save(modelBikeCreate)
+
+      const result = await getRepositoryModelBike.save(modelBikeCreate);
 
       const modelBike = await getRepositoryModelBike.findOneBy({
         id: result.id,
       });
 
       return modelBike;
-    }catch (error) {
+    } catch (error) {
       console.log(error);
       return new Error("Error when save");
     }
   }
 
   async update(id: string, nameModelBike: string) {
+    if (!uuid(id)) {
+      return Error("Bike does not exist in the database");
+    }
+
     const modelbike = await getRepositoryModelBike.findOneBy({
       id: id,
     });
@@ -35,7 +40,7 @@ class ModelBikeUseCase {
         .createQueryBuilder()
         .update(ModelBike)
         .set({
-          nameModel: nameModelBike
+          nameModel: nameModelBike,
         })
         .where("id :id", { id: id })
         .execute();
@@ -56,6 +61,10 @@ class ModelBikeUseCase {
   }
 
   async show(id: string) {
+    if (!uuid(id)) {
+      return Error("Bike does not exist in the database");
+    }
+
     try {
       const modelBike = await getRepositoryModelBike.findOneBy({
         id: id,

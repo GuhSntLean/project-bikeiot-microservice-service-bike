@@ -4,6 +4,7 @@ import { BikeProvider } from "../provider/BikeProvider";
 import { getRepositoryBike } from "../repository/BikeRepository";
 import { getRepositoryModelBike } from "../repository/ModelBikeRepository";
 import { RabbitMQServer } from "../server/RabbitMQServer";
+import { validate as uuid } from "uuid";
 
 class BikeUseCase {
   async save(mac: string, modelbike: string, status: string) {
@@ -54,6 +55,10 @@ class BikeUseCase {
   async update(id: string, mac: string, status: string, modelbike: string) {
     const serverAmqp = new RabbitMQServer();
     const bikeProvider = new BikeProvider();
+
+    if (!uuid(id)) {
+      return Error("Bike does not exist in the database");
+    }
 
     const bikeExist = await getRepositoryBike.findOneBy({
       id: id,
@@ -120,6 +125,10 @@ class BikeUseCase {
   async updateStatus(id: string, status: string) {
     const bikeProvider = new BikeProvider();
 
+    if (!uuid(id)) {
+      return Error("Bike does not exist in the database");
+    }
+
     const bikeExist = await getRepositoryBike.findOneBy({
       id: id,
     });
@@ -158,6 +167,10 @@ class BikeUseCase {
   }
 
   async show(id: string) {
+    if (!uuid(id)) {
+      return Error("Bike does not exist in the database");
+    }
+    
     try {
       const bike = await getRepositoryBike.findOneBy({
         id: id,
