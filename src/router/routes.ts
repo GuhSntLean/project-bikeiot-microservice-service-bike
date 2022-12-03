@@ -1,6 +1,9 @@
 import express from "express";
 import { BikeController } from "../controllers/BikeController";
 import { ModelBikeController } from "../controllers/ModelBikeController";
+import AuthenticatedAdminMiddleware from "../middleware/AuthenticatedAdminMiddleware";
+
+const authenticatedAdminMiddleware = new AuthenticatedAdminMiddleware()
 
 const modelBikeController = new ModelBikeController();
 const bikeController = new BikeController();

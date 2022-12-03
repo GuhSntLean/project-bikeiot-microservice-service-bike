@@ -157,10 +157,14 @@ class BikeUseCase {
         return new Error("Error when updating");
       }
 
-      const bike = await getRepositoryBike.findOneBy({
-        id: id,
+      const bike = await getRepositoryBike.findOne({
+        where: {
+          id: id,
+        },
+        relations: {
+          modelBike: true,
+        },
       });
-
       const resultReturn: InterfaceResponseBike = {
         id: bike.id,
         serialnumber: bike.serialNumber,
