@@ -48,7 +48,7 @@ class BikeUseCase {
 
       return resultReturn;
     } catch (error) {
-      return new Error("Erro save user");
+      return new Error("Erro save bike");
     }
   }
 
@@ -170,26 +170,40 @@ class BikeUseCase {
     if (!uuid(id)) {
       return Error("Bike does not exist in the database");
     }
-    
+
     try {
-      const bike = await getRepositoryBike.findOneBy({
-        id: id,
+      const bike = await getRepositoryBike.findOne({
+        where: { id: id },
+        relations: { modelBike: true },
       });
 
       if (!bike) {
-        return new Error("User not found");
+        return new Error("Bike does not exist in the database");
       }
 
-      return bike;
+      const resultReturn: InterfaceResponseBike = {
+        id: bike.id,
+        serialnumber: bike.serialNumber,
+        mac: bike.mac,
+        status: bike.status,
+        modelbike: bike.modelBike.id,
+      };
+
+      return resultReturn;
     } catch (error) {
       console.log(error);
-      return new Error("User not found");
+      return new Error("Bike does not exist in the database");
     }
   }
 
   async list() {
     try {
-      const list = await getRepositoryBike.find();
+      const list = await getRepositoryBike
+        .createQueryBuilder("bike")
+        .select(
+          "bike.id , bike.mac , bike.serial_Number as serialnumber, bike.model_id as modelbike"
+        )
+        .getRawMany();
 
       if (!list) {
         return new Error("Bikes not found");

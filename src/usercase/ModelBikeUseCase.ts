@@ -4,6 +4,16 @@ import { validate as uuid } from "uuid";
 
 class ModelBikeUseCase {
   async save(namemodel: string) {
+    const modelBikeExist = await getRepositoryModelBike.findOne({
+      where: {
+        nameModel: namemodel,
+      },
+    });
+
+    if (modelBikeExist) {
+      return new Error("model bike exist");
+    }
+
     try {
       const modelBikeCreate = getRepositoryModelBike.create({
         nameModel: namemodel,
@@ -11,11 +21,12 @@ class ModelBikeUseCase {
 
       const result = await getRepositoryModelBike.save(modelBikeCreate);
 
-      const modelBike = await getRepositoryModelBike.findOneBy({
+      const returnResult = {
         id: result.id,
-      });
+        namemodel: result.nameModel,
+      };
 
-      return modelBike;
+      return returnResult;
     } catch (error) {
       console.log(error);
       return new Error("Error when save");
@@ -34,6 +45,13 @@ class ModelBikeUseCase {
     if (!modelbike) {
       return new Error("Model Bike not found");
     }
+    const verifyNameMode = await getRepositoryModelBike.findOneBy({
+      nameModel: nameModelBike,
+    });
+
+    if(verifyNameMode && verifyNameMode.id != id){
+      return new Error("Model bike exist");
+    }
 
     try {
       const result = await getRepositoryModelBike
@@ -49,14 +67,19 @@ class ModelBikeUseCase {
         return new Error("Error when updating");
       }
 
-      const modelBike = await getRepositoryModelBike.findOneBy({
+      const resultUpdate = await getRepositoryModelBike.findOneBy({
         id: id,
       });
 
-      return modelBike;
+      const returnResult = {
+        id: resultUpdate.id,
+        namemodel: resultUpdate.nameModel,
+      };
+
+      return returnResult;
     } catch (error) {
       console.log(error);
-      return new Error("Model bikes not found");
+      return new Error("Error when updating");
     }
   }
 

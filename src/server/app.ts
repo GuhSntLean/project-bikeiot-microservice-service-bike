@@ -1,8 +1,8 @@
 import express from "express";
 import http from "http";
 import { routes } from "../router/routes";
-import { AdminUserUseCase } from "../usercase/AdminUserUseCase";
-import { RabbitMQServer } from "./RabbitMQServer";
+// import { AdminUserUseCase } from "../usercase/AdminUserUseCase";
+// import { RabbitMQServer } from "./RabbitMQServer";
 
 const app = express();
 const appPort = process.env.PORT || 3003;
