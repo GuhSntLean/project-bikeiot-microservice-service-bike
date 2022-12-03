@@ -21,7 +21,7 @@ class AdminUserUseCase {
       return false;
     }
 
-    const userExist = getRepositoryUserAdmin.findOne({
+    const userExist = await getRepositoryUserAdmin.findOne({
       where: { id: adminData.id },
     });
 

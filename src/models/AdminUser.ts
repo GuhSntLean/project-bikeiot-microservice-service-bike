@@ -5,7 +5,7 @@ enum UserRole {
   EDITOR = "editor",
 }
 
-@Entity("bike_information")
+@Entity("admin_users")
 class AdminUser {
   @PrimaryColumn()
   id: string;
