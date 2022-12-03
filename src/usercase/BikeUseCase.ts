@@ -123,6 +123,7 @@ class BikeUseCase {
     }
   }
   async updateStatus(id: string, status: string) {
+    const serverAmqp = new RabbitMQServer();
     const bikeProvider = new BikeProvider();
 
     if (!uuid(id)) {
@@ -160,7 +161,26 @@ class BikeUseCase {
         id: id,
       });
 
-      return bike;
+      const resultReturn: InterfaceResponseBike = {
+        id: bike.id,
+        serialnumber: bike.serialNumber,
+        mac: bike.mac,
+        status: bike.status,
+        modelbike: bike.modelBike.id,
+      };
+
+      await serverAmqp.start();
+      await serverAmqp.publishExchange(
+        "data.bike",
+        JSON.stringify(resultReturn)
+      );
+
+      const status = {
+        id: bike.id,
+        status: bike.status,
+      };
+
+      return status;
     } catch (error) {
       return new Error("Error when updating");
     }
