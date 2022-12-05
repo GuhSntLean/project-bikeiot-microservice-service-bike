@@ -15,12 +15,12 @@ export class AdminUser1669661016407 implements MigrationInterface {
                 {
                   name: "user_name",
                   type: "varchar",
-                  isUnique: true,
+                  isUnique: false,
                 },
                 {
                   name: "email",
                   type: "varchar",
-                  isUnique: true,
+                  isUnique: false,
                 },
                 {
                   name: "role",

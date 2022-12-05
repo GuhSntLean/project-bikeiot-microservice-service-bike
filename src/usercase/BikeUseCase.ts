@@ -114,7 +114,7 @@ class BikeUseCase {
       await serverAmqp.start();
       await serverAmqp.publishExchange(
         "data.bike",
-        JSON.stringify(resultUpdate)
+        JSON.stringify(resultReturn)
       );
 
       return resultReturn;
