@@ -10,13 +10,13 @@ const bikeController = new BikeController();
 
 const routes = express();
 
-routes.get(
+routes.post(
   "/list-model-bike",
   authenticatedAdminMiddleware.ensureAuthenticated,
   modelBikeController.list
 );
-routes.get(
-  "/model-bike",
+routes.post(
+  "/get-model-bike",
   authenticatedAdminMiddleware.ensureAuthenticated,
   modelBikeController.show
 );
@@ -31,23 +31,19 @@ routes.post(
   modelBikeController.store
 );
 
-routes.get(
+routes.post(
   "/list-bike",
   authenticatedAdminMiddleware.ensureAuthenticated,
   bikeController.list
 );
-routes.get(
-  "/bike",
+routes.post(
+  "/get-bike",
   authenticatedAdminMiddleware.ensureAuthenticated,
   bikeController.show
 );
-// routes.put(
-//   "/bike",
-//   authenticatedAdminMiddleware.ensureAuthenticated,
-//   bikeController.update
-// );
 routes.put(
   "/bike",
+  authenticatedAdminMiddleware.ensureAuthenticated,
   bikeController.update
 );
 routes.post(
